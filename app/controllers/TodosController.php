@@ -22,11 +22,13 @@ class TodosController extends \controllers\ControllerBase{
 
     #[Get(path: "/default/",name: "home")]
 	public function index(){
-        $list=USession::get('list', []);
+        $list=USession::get(self::ACTIVE_LIST_SESSION_KEY, []);
         $this->jquery->click('._toEdit', 'let item=$(this).closest("div.item");
                                                             item.find("form").toggle();
                                                             item.find(".checkbox").toggle();');
+        $this->jquery->getOnClick('._toDelete', Router::path('todos.deleteElement'),'._content',['hasLoader'=>'internal', 'attr'=>'data-value']);
         $this->jquery->getHref('a', parameters: ['hasLoader' =>false, 'historize'=>false]);
+        $this->jquery->postOn('submit','._formEdit',Router::path('todos.editElement'), '{id: $(this).find("input").attr("id")}','._content', ['hasLoader'=>'internal']);
         $this->jquery->renderView('TodosController/index.html', ['list'=>$list]);
 	}
 
@@ -39,18 +41,22 @@ class TodosController extends \controllers\ControllerBase{
 
 
 	#[Get(path: "todos/delete/{index}",name: "todos.deleteElement")]
-	public function deleteElement($index){
+	public function deleteElement($index=0){
 
-		$this->loadView('TodosController/deleteElement.html');
+        $list=USession::get(self::ACTIVE_LIST_SESSION_KEY,[]);
+        unset($list[$index]);
+        USession::set(self::ACTIVE_LIST_SESSION_KEY,\array_values($list));
+        $this->index();
 
 	}
 
 
-	#[Post(path: "todos/edit/{index}",name: "todos.editElement")]
-	public function editElement($index){
+	#[Post(path: "todos/edit",name: "todos.editElement")]
+	public function editElement(){
 
-        USession::addValueToArray('list', URequest::post('items'));
-		$this->loadView('TodosController/editElement.html');
+        USession::addValueToArray(self::ACTIVE_LIST_SESSION_KEY, URequest::post('items'));
+        echo "edit effectuée";
+
 
 	}
 
@@ -66,7 +72,7 @@ class TodosController extends \controllers\ControllerBase{
 	#[Post(path: "/todos/loadList",name: "todos.loadListFromForm")]
 	public function loadListFromForm(){
 
-        USession::addValueToArray('list', URequest::post('items'));
+        USession::addValueToArray(self::ACTIVE_LIST_SESSION_KEY, URequest::post('items'));
         echo "listes ajoutées";
 
 	}
