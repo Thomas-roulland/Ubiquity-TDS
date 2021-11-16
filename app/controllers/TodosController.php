@@ -14,23 +14,33 @@ use Ubiquity\utils\http\USession;
   */
 class TodosController extends \controllers\ControllerBase{
 
+
+    const CACHE_KEY = 'datas/lists/';
+    const EMPTY_LIST_ID='not saved';
+    const LIST_SESSION_KEY='list';
+    const ACTIVE_LIST_SESSION_KEY='active-list';
+
     #[Get(path: "/default/",name: "home")]
 	public function index(){
         $list=USession::get('list', []);
+        $this->jquery->click('._toEdit', 'let item=$(this).closest("div.item");
+                                                            item.find("form").toggle();
+                                                            item.find(".checkbox").toggle();');
+        $this->jquery->getHref('a', parameters: ['hasLoader' =>false, 'historize'=>false]);
         $this->jquery->renderView('TodosController/index.html', ['list'=>$list]);
 	}
 
 	#[Get(path: "todos/add/",name: "todos.addElement")]
 	public function addElement(){
-        $this->jquery->postFormOnClick('button',Router::path('todos.loadListFromForm'), 'frm');
-		$this->loadView('TodosController/addElement.html');
+        $this->jquery->postFormOnClick('button',Router::path('todos.loadListFromForm'), 'frm','._content', ['hasLoader'=>'internal']);
+		$this->jquery->renderView('TodosController/addElement.html');
 
 	}
 
 
 	#[Get(path: "todos/delete/{index}",name: "todos.deleteElement")]
 	public function deleteElement($index){
-		
+
 		$this->loadView('TodosController/deleteElement.html');
 
 	}
@@ -38,7 +48,8 @@ class TodosController extends \controllers\ControllerBase{
 
 	#[Post(path: "todos/edit/{index}",name: "todos.editElement")]
 	public function editElement($index){
-		
+
+        USession::addValueToArray('list', URequest::post('items'));
 		$this->loadView('TodosController/editElement.html');
 
 	}
@@ -54,8 +65,9 @@ class TodosController extends \controllers\ControllerBase{
 
 	#[Post(path: "/todos/loadList",name: "todos.loadListFromForm")]
 	public function loadListFromForm(){
-		USession::addValueToArray('list', URequest::post('items'));
-		$this->loadView('TodosController/loadListFromForm.html');
+
+        USession::addValueToArray('list', URequest::post('items'));
+        echo "listes ajoutées";
 
 	}
 
