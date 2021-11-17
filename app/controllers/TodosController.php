@@ -109,7 +109,10 @@ class TodosController extends \controllers\ControllerBase{
 
 	#[Get(path: "/todos/saveList",name: "todos.saveList")]
 	public function saveList(){
-		
+
+        $list=USession::get(self::ACTIVE_LIST_SESSION_KEY, []);
+        $id=uniqid('',true);
+        CacheManager::$cache->store(self::CACHE_KEY . $id, $list);
 		$this->loadView('TodosController/saveList.html');
 
 	}

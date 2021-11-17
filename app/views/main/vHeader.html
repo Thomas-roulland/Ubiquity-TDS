@@ -5,6 +5,7 @@
 	<base href="{{config["siteUrl"]}}">
 	<meta charset="UTF-8">
 	<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+	<link rel="stylesheet" href="">
 	<title>tds</title>
 {% endblock %}
 {% block css %}
@@ -16,9 +17,10 @@
 {% block head %}
 <div class="ui container">
 
-<div class="ui fluid menu">
+<div class="ui inverted attached menu">
 	<a class="item" href="{{path('home')}}" data-target="._content">voir les listes</a>
 	<a class="item" href="{{path('todos.addElement')}}" data-target="._content">Ajout d'une liste</a>
+	<a class="item" href="{{path('todos.saveList')}}" data-target="._content">Sauvegarde d'une liste</a>
 	<div class="item right floated">
 		{{ _userInfo|raw }}</div>
 	</div>
