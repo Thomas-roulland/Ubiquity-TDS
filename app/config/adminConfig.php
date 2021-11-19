@@ -40,8 +40,11 @@ return array(
 			"config"
 			],
 	"part2"=>[
+			"themes",
 			"maintenance",
-			"composer"
+			"composer",
+			"logs"
 			],
-	"style"=>"inverted"
+	"style"=>"inverted",
+	"activeDb"=>"default"
 	);
