@@ -19,7 +19,13 @@ return array(
 			],
 	"test"=>false,
 	"debug"=>true,
-	"logger"=>function (){return new \Ubiquity\log\libraries\UMonolog("Project",\Monolog\Logger::INFO);},
+	"logger"=>function (){
+        return new \Ubiquity\log\libraries\UMonolog(array (
+  'host' => '127.0.0.1',
+  'port' => 8090,
+  'sessionName' => 's61974d6d905e1',
+)['sessionName'], \Monolog\Logger::INFO);
+    },
 	"di"=>[
 			"@exec"=>[
 					"jquery"=>function ($controller){

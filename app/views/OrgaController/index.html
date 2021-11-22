@@ -6,6 +6,9 @@
     {% endblock %}
     {% block body %}
     {{ parent() }}
+<a href="{{ path('orga.orgaAdd') }}" data-target="body"  class="ui olive basic button">
+    <i class="plus icon"></i>Ajoutez une Organisation
+</a>
         <h1>Organisations</h1>
         {% for orga in all %}
         <div class="ui list">
@@ -14,6 +17,7 @@
                 <a class="rigth floated" href="{{path('orgas.update', [orga.id])}}">
                     <i class="ui edit icon"></i>
                 </a>
+                <a  href="{{path('orga.delete', [orga.id])}}"><i class=" red trash alternate icon"></i></a>
             </div>
 
         </div>

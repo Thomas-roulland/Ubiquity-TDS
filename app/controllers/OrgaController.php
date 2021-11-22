@@ -52,11 +52,49 @@ class OrgaController extends \controllers\ControllerBase{
         $this->index();
     }
 
-	#[Route(path: "Orga/getOne/{id}",name: "orga.getOne")]
+	#[Route(path: "orga/getOne/{id}",name: "orga.getOne")]
 	public function getOne($id){
         $this->repo->byId($id,['groupes.users','users.groupes']);
 		$this->loadView('OrgaController/getOne.html');
 
 	}
+
+
+	#[Get(path: "Orga/add",name: "orga.orgaAdd")]
+	public function orgaAdd(){
+        $org=New Organization();
+		$frm=$this->jquery->semantic()->dataForm('frm-orga', $org);
+        $frm->setActionTarget(Router::path('orga.postAdd'), '');
+        $frm->setProperty('method','post');
+        $frm->setFields(['name','domain', 'aliases', 'submit']);
+        $frm->fieldAsSubmit('submit', 'green','');
+		$this->jquery->renderView('OrgaController/orgaAdd.html');
+	}
+
+
+	#[Post(path: "add",name: "orga.postAdd")]
+	public function postAdd(){
+        
+        $org= new Organization();
+        if ($org){
+            URequest::setValuesToObject($org);
+            $this->repo->insert($org);
+        }
+        $this->index();
+	}
+
+
+	#[Get(path: "Orga/delete/{id}",name: "orga.delete")]
+	public function delete($id){
+        $org=$this->repo->byId($id);
+        if($org){
+        $this->repo->remove($org);
+        }
+       $this->index();
+
+	}
+
+
+
 
 }
