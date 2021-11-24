@@ -53,13 +53,13 @@ class User{
 	private $organization;
 
 	
-	#[ManyToMany(targetEntity: "models\\Groupe",inversedBy: "users")]
-	#[JoinTable(name: "groupeusers")]
-	private $groupes;
+	#[ManyToMany(targetEntity: "models\\Group",inversedBy: "users")]
+	#[JoinTable(name: "groupusers")]
+	private $groups;
 
 
 	 public function __construct(){
-		$this->groupes = [];
+		$this->groups = [];
 	}
 
 
@@ -133,18 +133,18 @@ class User{
 	}
 
 
-	public function getGroupes(){
-		return $this->groupes;
+	public function getGroups(){
+		return $this->groups;
 	}
 
 
-	public function setGroupes($groupes){
-		$this->groupes=$groupes;
+	public function setGroups($groups){
+		$this->groups=$groups;
 	}
 
 
-	 public function addGroupe($groupe){
-		$this->groupes[]=$groupe;
+	 public function addGroup($group){
+		$this->groups[]=$group;
 	}
 
 

@@ -42,9 +42,7 @@ return array(
 	"part2"=>[
 			"themes",
 			"maintenance",
-			"composer",
-			"logs"
+			"composer"
 			],
-	"style"=>"inverted",
-	"activeDb"=>"default"
+	"style"=>"inverted"
 	);
