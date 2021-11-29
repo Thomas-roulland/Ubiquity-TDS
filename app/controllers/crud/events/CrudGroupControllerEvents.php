@@ -3,8 +3,8 @@ namespace controllers\crud\events;
 
 use Ubiquity\controllers\crud\CRUDEvents;
  /**
-  * Class CrudUsersControllerEvents
+  * Class CrudGroupControllerEvents
   */
-class CrudUsersControllerEvents extends CRUDEvents{
+class CrudGroupControllerEvents extends CRUDEvents{
 	//use override/implement Methods
 }

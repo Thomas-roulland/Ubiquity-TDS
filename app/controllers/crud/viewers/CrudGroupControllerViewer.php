@@ -3,8 +3,8 @@ namespace controllers\crud\viewers;
 
 use Ubiquity\controllers\crud\viewers\ModelViewer;
  /**
-  * Class IndexCrudControllerViewer
+  * Class CrudGroupControllerViewer
   */
-class IndexCrudControllerViewer extends ModelViewer{
+class CrudGroupControllerViewer extends ModelViewer{
 	//use override/implement Methods
 }

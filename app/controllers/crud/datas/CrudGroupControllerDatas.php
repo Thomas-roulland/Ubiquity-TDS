@@ -3,8 +3,8 @@ namespace controllers\crud\datas;
 
 use Ubiquity\controllers\crud\CRUDDatas;
  /**
-  * Class IndexCrudControllerDatas
+  * Class CrudGroupControllerDatas
   */
-class IndexCrudControllerDatas extends CRUDDatas{
+class CrudGroupControllerDatas extends CRUDDatas{
 	//use override/implement Methods
 }
