@@ -1,0 +1,34 @@
+{% block _before %}
+<div class="ui olive inverted attached segment">
+    <div class="ui  segment"></div>
+    {% endblock %}
+    <div class="column">
+        <div class="ui attached segment"><i class="people arrows icon"></i> Groupes</div>
+        <div class="ui attached green segment">
+
+            <div class="ui divided list">
+                <div class="item">
+                    <a href="{{ path('new.group') }}" class="ui basic olive button" data-target="#new-group"><i class="plus icon"></i> Ajouter un groupe...</a>
+                    <div id="new-group"></div>
+                </div>
+                <div class="item">
+                    {{ q['dd-group'] | raw}}
+                    {{ q['frm-user'] | raw}}
+                </div>
+                <div class="item">
+                    <div class="ui labeled button" tabindex="0">
+                        <a href="groups/?" class="ui olive button" data-target="#orga-index">
+                            <i class="users icon"></i> Gérer les groupes...
+                        </a>
+                        <span id="groups-count" class="ui basic olive left pointing label">
+                                4
+                            </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block script %}
+    {{script_foot | raw}}
+    {% endblock %}

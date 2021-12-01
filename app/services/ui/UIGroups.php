@@ -5,9 +5,12 @@ namespace services\ui;
  use Ajax\php\ubiquity\UIService;
  use Ajax\semantic\widgets\dataform\DataForm;
  use models\Group;
+ use models\User;
  use Ubiquity\controllers\Controller;
  use Ubiquity\controllers\Router;
+ use Ubiquity\orm\DAO;
  use Ubiquity\utils\http\URequest;
+ use Ubiquity\utils\models\UArrayModels;
 
  /**
   * Class UIGroups
@@ -38,5 +41,23 @@ namespace services\ui;
          $frm->fieldAsLabeledInput('name',['rules'=>'empty']);
          $frm->fieldAsLabeledInput('email',['rules'=>'empty']);
          $this->addFormBehavior($formName,$frm,'new-group','new.groupPost');
+     }
+
+     public function addUser(){
+         $users=new User();
+         $grp=new Group();
+         $ids = \array_map(function ($user){
+             return $user->getId ();
+         }, $grp->getUsers());
+         $grp->userIds=implode(',',$ids);
+         $dd=$this->semantic->htmlDropdown('dd-group','Ajouter des utilisateurs au groupe ...', UArrayModels::asKeyValues(DAO::getAll(Group::class)));
+         $dd->asButton();
+         $dd->setIcon("users");
+         $frm=$this->semantic->dataForm('frm-user',new User());
+         $frm->setActionTarget(Router::path('group.addPost'), '');
+         $frm->setFields([ 'usersIds', 'submit',]);
+         $frm->setProperty('method', 'post');
+         $frm->fieldAsSubmit('submit', 'green', '');
+         $frm->fieldAsDropDown('usersIds', UArrayModels::asKeyValues(DAO::getAll(User::class), 'getId'), true);
      }
  }
